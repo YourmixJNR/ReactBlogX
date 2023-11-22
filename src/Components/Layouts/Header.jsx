@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <div>
-      {/* <!-- Responsive navbar--> */}
+    <header>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
           <Link to="#" className="navbar-brand">
@@ -47,7 +46,7 @@ const Header = () => {
           </div>
         </div>
       </nav>
-    </div>
+    </header>
   );
 };
 

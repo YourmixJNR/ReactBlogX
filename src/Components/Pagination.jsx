@@ -11,7 +11,7 @@ const Pagination = () => {
           <li className="page-item disabled">
             <Link to="#"
               className="page-link"
-              tabindex="-1"
+            //   tabindex="-1"
               aria-disabled="true"
             >
               Newer

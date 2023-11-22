@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Pagination from "./Pagination";
+import SearchWidget from "./Widgets/SearchWidget";
+import SideWidget from "./Widgets/SideWidget";
 
 const PostContents = () => {
   return (
@@ -83,6 +85,10 @@ const PostContents = () => {
               </div>
             </div>
             <Pagination />
+          </div>
+          <div className="col-lg-4">
+            <SearchWidget />
+            <SideWidget />
           </div>
         </div>
       </div>

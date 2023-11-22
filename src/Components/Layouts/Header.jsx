@@ -48,7 +48,6 @@ const Header = () => {
           </div>
         </div>
       </nav>
-      <Footer />
     </header>
   );
 };

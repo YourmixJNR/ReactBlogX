@@ -1,3 +1,5 @@
+import React from "react";
+import { Link } from "react-router-dom";
 import "./Auth.css";
 
 const SignUp = () => {
@@ -33,6 +35,7 @@ const SignUp = () => {
         <button className="btn btn-lg btn-primary btn-block" type="submit">
           Sign up
         </button>
+        <Link to="/login">Login</Link>
       </form>
     </div>
   );

@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Auth.css";
+import AuthContext from "../Context/AuthContext";
 
 const Login = () => {
+  const { signIn } = useContext(AuthContext);
+
+  const [error, setError] = useState(null);
+  const[message, setMessage] = useState("")
+  
   return (
     <div className="text-center div">
       <form className="form-signin">
@@ -39,6 +45,6 @@ const Login = () => {
       </form>
     </div>
   );
-}
+};
 
 export default Login;

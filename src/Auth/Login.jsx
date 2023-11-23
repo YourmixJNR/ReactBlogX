@@ -1,22 +1,42 @@
-import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./Auth.css";
 import AuthContext from "../Context/AuthContext";
 
 const Login = () => {
   const { signIn } = useContext(AuthContext);
+  const [message, setMessage] = useState("");
 
-  const [error, setError] = useState(null);
-  const[message, setMessage] = useState("")
-  
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  let navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+
+    // Simplified signUp call
+    const { data, error } = await signIn({ email, password });
+
+    if (error) {
+      setMessage(error.message);
+      return;
+    } else {
+      navigate("/");
+    }
+  };
+
   return (
     <div className="text-center div">
-      <form className="form-signin">
+      <form className="form-signin" onSubmit={handleSubmit}>
         <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
         <label htmlFor="inputEmail" className="sr-only">
           Email address
         </label>
         <input
+          ref={emailRef}
           type="email"
           id="inputEmail"
           className="form-control"
@@ -27,6 +47,7 @@ const Login = () => {
           Password
         </label>
         <input
+          ref={passwordRef}
           type="password"
           id="inputPassword"
           className="form-control"
@@ -41,8 +62,9 @@ const Login = () => {
         <button className="btn btn-lg btn-primary btn-block" type="submit">
           Sign in
         </button>
-        <Link to="/signup">SignUp</Link>
       </form>
+      <Link to="/signup">SignUp</Link>
+      {message}
     </div>
   );
 };

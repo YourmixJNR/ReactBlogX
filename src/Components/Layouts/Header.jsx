@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import './Layouts.css';
+import AuthContext from "../../Context/AuthContext";
+import "./Layouts.css";
 
 const Header = () => {
+  const { user } = useContext(AuthContext);
+
   return (
     <header>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark" id="mainNav">
@@ -43,6 +46,9 @@ const Header = () => {
                 <Link to="#" className="nav-link px-lg-3 py-3 py-lg-4">
                   Contact
                 </Link>
+              </li>
+              <li className="nav-item">
+               <p style={{color: "white"}}>{user.email}</p>
               </li>
             </ul>
           </div>

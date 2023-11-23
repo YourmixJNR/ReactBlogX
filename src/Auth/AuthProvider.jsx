@@ -36,18 +36,17 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const value = {
-    signUp: async (data) => {
+    signUp: async (credentials) => {
       try {
-        const { error } = await supabase.auth.signUp(data);
-        return { error };
+        const { data, error } = await supabase.auth.signUp(credentials);
+        return { data, error };
       } catch (error) {
-        console.error("Sign-up error:", error);
-        return { error: "An error occurred during sign-up." };
+        console.log(error);
       }
     },
-    signIn: async (data) => {
-      const { error } = await supabase.auth.signIn(data);
-      return { error };
+    signIn: async (credentials) => {
+      const { data, error } = await supabase.auth.signInWithPassword(credentials);
+      return { data, error };
     },
     signOut: async () => {
       const { error } = await supabase.auth.signOut();
@@ -57,7 +56,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={{value, user}}>
       {!loading && children}
     </AuthContext.Provider>
   );

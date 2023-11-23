@@ -5,7 +5,6 @@ import AuthContext from "../Context/AuthContext";
 
 const SignUp = () => {
   const { signUp } = useContext(AuthContext);
-  const [error, setError] = useState(null);
   const [message, setMessage] = useState("");
 
   const emailRef = useRef();
@@ -19,15 +18,14 @@ const SignUp = () => {
     const password = passwordRef.current.value;
 
     // Simplified signUp call
-    const { error } = await signUp({ email, password });
+    const { data, error } = await signUp({ email, password });
 
     if (error) {
-      setError(error);
-      setMessage("Error with email or password");
+      setMessage(error.message);
       return;
+    } else {
+      navigate("/");
     }
-
-    navigate("/");
   };
 
   return (
@@ -53,9 +51,9 @@ const SignUp = () => {
         <button className="btn btn-lg btn-primary btn-block" type="submit">
           Sign up
         </button>
-        <Link to="/login">Login</Link>
       </form>
-      {message && <p>{message}</p>}
+      <Link to="/login">Login</Link>
+      {message}
     </div>
   );
 };

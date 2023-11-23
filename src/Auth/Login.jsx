@@ -63,7 +63,7 @@ const Login = () => {
           Sign in
         </button>
       </form>
-      <Link to="/signup">SignUp</Link>
+       <Link to="/signup">SignUp</Link>
       {message}
     </div>
   );

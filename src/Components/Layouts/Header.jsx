@@ -1,10 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../Context/AuthContext";
 import "./Layouts.css";
 
 const Header = () => {
-  const { user } = useContext(AuthContext);
+  const { user, signOut } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/");
+  };
 
   return (
     <header>
@@ -47,8 +53,17 @@ const Header = () => {
                   Contact
                 </Link>
               </li>
-              <li className="nav-item">
-               <p style={{color: "white"}}>{user.email}</p>
+              <li style={{color: 'white'}} className="nav-item">
+                {user === null ? (
+                  <p>
+                    <Link to="/login">Sign In</Link>
+                  </p>
+                ) : (
+                  <div>
+                    {user.email} <br />
+                    <p onClick={handleSignOut}>Sign Out</p>
+                  </div>
+                )}
               </li>
             </ul>
           </div>

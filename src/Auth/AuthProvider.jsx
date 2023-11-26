@@ -35,21 +35,56 @@ const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  const checkAndRefreshToken = async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+
+    if (accessToken && refreshToken) {
+      const { error } = await supabase.auth.api.refreshToken(refreshToken);
+
+      if (error) {
+        const { data, error } = await supabase.auth.api.refreshToken(refreshToken);
+
+        if (data) {
+          const newAccessToken = data.access_token;
+          localStorage.setItem("accessToken", newAccessToken);
+          supabase.auth.setSession(newAccessToken);
+        } else {
+          console.error("Error refreshing token:", error);
+        }
+      }
+    }
+  };
+
   const value = {
     signUp: async (credentials) => {
       try {
         const { data, error } = await supabase.auth.signUp(credentials);
+        if (data && data.refresh_token) {
+          // Store refresh token on sign-up
+          localStorage.setItem("refreshToken", data.refresh_token);
+        }
         return { data, error };
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     },
     signIn: async (credentials) => {
       const { data, error } = await supabase.auth.signInWithPassword(credentials);
+      if (data && data.refresh_token) {
+        // Store refresh token on sign-in
+        localStorage.setItem("refreshToken", data.refresh_token);
+      }
+      if (data) {
+        // Refresh token after successful login
+        checkAndRefreshToken();
+      }
       return { data, error };
     },
     signOut: async () => {
       const { error } = await supabase.auth.signOut();
+      // Clear refresh token on sign-out
+      localStorage.removeItem("refreshToken");
       return { error };
     },
     user,

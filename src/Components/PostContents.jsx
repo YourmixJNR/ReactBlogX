@@ -1,12 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "./Pagination";
 import SearchWidget from "./Widgets/SearchWidget";
 import SideWidget from "./Widgets/SideWidget";
+import { supabase } from "../supabaseClient";
 
 const PostContents = () => {
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    const getBlog = async () => {
+      try {
+        const { data, error } = await supabase.from("blog").select("*");
+        console.log(data)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getBlog();
+  }, []);
+
+ 
+
   return (
     <div>
+      {<Link to="/addpost">
+        AddPost
+      </Link>}
       {/* <!-- Page content--> */}
       <div className="container">
         <div className="row">

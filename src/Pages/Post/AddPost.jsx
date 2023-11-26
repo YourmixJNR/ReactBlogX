@@ -8,26 +8,25 @@ const AddPost = () => {
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
 
-  let navigate = useNavigate()
+  let navigate = useNavigate();
 
-  const addBlog = async ({ title, description, content }) => {
+  const addBlog = async (e) => {
+    e.preventDefault();
     try {
-      const update = {
-        id: uuid,
+      const updates = {
+        id: uuid(),
         title: title,
         description: description,
         content: content,
       };
 
-      const { error } = await supabase
-        .from("blog")
-        .insert(update)
-        .then(navigate("/"));
+      const { error } = await supabase.from("blog").insert([updates]);
 
-        if(error) {
-            throw error
-        }
+      if (error) {
+        throw error;
+      }
 
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -90,7 +89,7 @@ const AddPost = () => {
                 <button
                   className="btn btn-light shadow btn-sm mb-2"
                   type="submit"
-                  onClick={() => addBlog(title, description, content)}
+                  onClick={(e) => addBlog(e)}
                 >
                   Add
                 </button>

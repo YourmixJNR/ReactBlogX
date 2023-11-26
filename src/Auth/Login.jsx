@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Auth.css";
 import AuthContext from "../Context/AuthContext";
@@ -20,8 +20,11 @@ const Login = () => {
     // Simplified signUp call
     const { data, error } = await signIn({ email, password });
 
-    if (error) {
+    if (data && error) {
+      localStorage.setItem("accessToken", data.access_token);
+      localStorage.setItem("refreshToken", data.refresh_token);
       setMessage(error.message);
+      console.log(data);
       return;
     } else {
       navigate("/");
@@ -63,7 +66,7 @@ const Login = () => {
           Sign in
         </button>
       </form>
-       <Link to="/signup">SignUp</Link>
+      <Link to="/signup">SignUp</Link>
       {message}
     </div>
   );

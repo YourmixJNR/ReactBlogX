@@ -1,11 +1,22 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "../../supabaseClient";
 import AuthContext from "../../Context/AuthContext";
 import "./Layouts.css";
 
 const Header = () => {
   const { user, signOut } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+  
+    if (accessToken && refreshToken) {
+      // Set user session using stored tokens
+      supabase.auth.setSession(accessToken);
+    }
+  }, []);
 
   const handleSignOut = async () => {
     await signOut();

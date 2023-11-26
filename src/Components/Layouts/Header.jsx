@@ -11,7 +11,7 @@ const Header = () => {
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
-  
+
     if (accessToken && refreshToken) {
       // Set user session using stored tokens
       supabase.auth.setSession(accessToken);
@@ -64,7 +64,7 @@ const Header = () => {
                   Contact
                 </Link>
               </li>
-              <li style={{color: 'white'}} className="nav-item">
+              <li style={{ color: 'white' }} className="nav-item">
                 {user === null ? (
                   <p>
                     <Link to="/login">Sign In</Link>

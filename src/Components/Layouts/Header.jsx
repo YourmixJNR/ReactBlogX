@@ -61,7 +61,7 @@ const Header = () => {
                 ) : (
                   <div>
                     {user.email} <br />
-                    <p onClick={handleSignOut}>Sign Out</p>
+                    <p style={{cursor: 'pointer'}} onClick={handleSignOut}>Sign Out</p>
                   </div>
                 )}
               </li>

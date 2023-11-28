@@ -9,7 +9,6 @@ const Home = () => {
   return (
     <div>
       <Header />
-      {/* <Login /> */}
       <HeroSection />
       <PostContents />
       <Footer />

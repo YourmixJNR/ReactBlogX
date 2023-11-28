@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "./Pagination";
 import SearchWidget from "./Widgets/SearchWidget";
 import SideWidget from "./Widgets/SideWidget";
 import { supabase } from "../supabaseClient";
+import AuthProvider from "../Auth/AuthProvider";
 
 const PostContents = () => {
   const [data, setData] = useState();
@@ -12,7 +13,8 @@ const PostContents = () => {
     const getBlog = async () => {
       try {
         const { data, error } = await supabase.from("blog").select("*");
-        console.log(data)
+        // console.log(data)
+        setData(data);
       } catch (error) {
         console.log(error);
       }
@@ -21,14 +23,14 @@ const PostContents = () => {
     getBlog();
   }, []);
 
- 
-
   return (
     <div>
-      {<Link to="/addpost">
-        AddPost
-      </Link>}
+      {<Link to="/addpost">AddPost</Link>}
       {/* <!-- Page content--> */}
+      {data.map((item) => (
+        <p>{item.title}</p>
+      ))}
+
       <div className="container">
         <div className="row">
           {/* <!-- Blog entries--> */}
